@@ -10,6 +10,8 @@ body {
     font-family: "Montserrat", sans-serif;
 }
 
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 .panel-box {
     height: 300px;
     position: relative;
@@ -25,7 +27,7 @@ body {
 
 .panel-body p {
     font-size: 120%;
-    padding: 20px;
+    padding: 5px;
 }
 
 .img-portfolio {

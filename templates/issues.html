@@ -1,0 +1,31 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Issues
+            <small>Select an issue to see call scripts.</small></h1>
+        </div>
+    </div>
+
+    <uib-accordion>
+        <div uib-accordion-group class="panel-default" heading="{{issue.title}}" ng-repeat="issue in issues">
+            <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12"
+                     ng-class="{'alert-danger': item.contentType === 'anti', 'alert-info': item.contentType !== 'anti', 'leading-issue-section': $index == 0}"
+                     ng-repeat="item in issue.content"
+                     ng-if="item.content">
+                    <h4 ng-if="item.contentType !== 'neutral' && item.content">
+                        Script for
+                            <span ng-if="item.contentType == 'pro'"> Progressive/History of Agreement on Issue </span>
+                            <span ng-if="item.contentType == 'anti'"> Conservative/History of Opposition </span>
+                    </h4>
+                    <p> {{item.content}} </p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </uib-accordion>
+    <!--leading-issue-section-->
+
+</div>
