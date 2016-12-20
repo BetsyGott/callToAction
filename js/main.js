@@ -8,6 +8,9 @@ app.config(function($routeProvider) {
         .when("/issues", {templateUrl: "templates/issues.html", controller: "mainCtrl"})
         .when("/faq", {templateUrl: "templates/faq.html", controller: "mainCtrl"})
         .when("/404", {templateUrl: "templates/404.html", controller: "mainCtrl"})
+        .when("/reps", {templateUrl: "templates/reps.html", controller: "mainCtrl"})
+        .when("/senators", {templateUrl: "templates/senators.html", controller: "mainCtrl"})
+        .when("/tips", {templateUrl: "templates/tips.html", controller: "mainCtrl"})
         /* etc… routes to other pages… */
         // else 404
         .otherwise({redirectTo: '/'});

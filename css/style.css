@@ -3,31 +3,121 @@
 html,
 body {
     height: 100%;
+    font-size: 18px;
 }
 
 body {
-    padding-top: 50px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    font-family: "Montserrat", sans-serif;
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+.light {
+    font-weight: 300;
+}
+
+.nav>li>a:focus,
+.nav>li>a:hover,
+.nav>li>a:active,
+.nav .open>a,
+.nav .open>a:focus,
+.nav .open>a:hover{
+    background-color: #286090;
+}
+
+.dropdown-menu {
+    background: #286090;
+    color: white;
+    border: 1px solid white;
+}
+
+.dropdown-menu>li>a {
+    color: white;
+    cursor: pointer;
+}
+
+.dropdown-menu>li>a:hover {
+    background-color: rgba(255,255,255,0.8);
 }
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
+.sitenav {
+    background: #153661;
+    margin-bottom: 0;
+}
+
+.sitenav, .sitenav a {
+    color: #ffffff;
+}
+
+.home-splash {
+    height:92vh;
+    background-image: url('../assets/img/capitol_dome.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    /*background-position: 0 40%;*/
+}
+
+.jumbotron .container {
+    background: rgba(255,255,255,0.4);
+    width: 60%;
+    padding: 20px 20px 40px 20px;
+    border: 10px double white;
+    color: #153661;
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.call-to-act-body {
+    background: rgba(255,255,255,0.6);
+    padding: 10px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.call-to-act-body h2 {
+    margin-top:0;
+}
+
+.call-btn{
+    background: rgba(99,149,193,0.8);
+    border: 1px solid white;
+    color: white;
+    font-weight: 200;
+}
+
+.main-panel-headers {
+    background: #153661;
+    color: white;
+    padding:3px;
+}
+
+.main-panel-body {
+    padding-top: 8px;
+    font-size: 16px;
+}
+
 .panel-box {
     height: 300px;
     position: relative;
+    border: 0;
+    box-shadow: none;
 }
 
 .panel-box .panel-body {
-    position: absolute;
-    top: 50%;
-    line-height: 230%;
-    transform: translateY(-25%);
     text-align: center;
 }
 
-.panel-body p {
-    font-size: 120%;
-    padding: 5px;
+/*.panel-body p {*/
+    /*font-size: 120%;*/
+    /*padding: 5px;*/
+/*}*/
+
+.tips-list {
+    line-height: 240%;
+    font-size: 115%;
 }
 
 .img-portfolio {
@@ -91,7 +181,7 @@ header.carousel .fill {
 /* Footer Styles */
 
 footer {
-    margin: 50px 0;
+    margin: 20px 0;
 }
 
 /* Responsive Styles */
@@ -112,3 +202,9 @@ footer {
         height: 70%;
     }
 }
+
+
+/* todo change font to something with bold/thin, like lato or josefin slab,  */
+/* todo fix the spacing and look of panels on main */
+/* todo change 'contact xxx' to uppercase, mess around with uppercase in other areas*/
+/*todo fix buttons in contact sections on main page, and also call to action button*/
