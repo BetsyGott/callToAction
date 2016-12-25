@@ -14,6 +14,11 @@ body {
     font-weight: 300;
 }
 
+.emphasized-text {
+    font-weight: bold;
+    font-size: 110%;
+}
+
 .nav>li>a:focus,
 .nav>li>a:hover,
 .nav>li>a:active,
@@ -116,7 +121,7 @@ body {
 /*}*/
 
 .tips-list {
-    line-height: 240%;
+    line-height: 220%;
     font-size: 115%;
 }
 
@@ -126,6 +131,40 @@ body {
 
 .img-hover:hover {
     opacity: 0.8;
+}
+
+/*senator/rep tables*/
+
+.state-table-header {
+    background: #286090;
+    color: #fff;
+}
+
+.state-title {
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.photo-cell {
+    width: 60px;
+}
+
+.rep-photo {
+    margin: 0 auto;
+    border: 2px solid black;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    padding: 40px;
+    background: url('../assets/img/blank_icon.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+}
+
+.table-icon {
+    margin: 0 5px;
 }
 
 /* Home Page Carousel */
