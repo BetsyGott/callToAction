@@ -18,9 +18,11 @@
                          ng-repeat="item in issue.content"
                          ng-if="item.content">
                         <h4 ng-if="item.contentType !== 'neutral' && item.content">
-                            Script for
-                                <span ng-if="item.contentType == 'pro'"> Progressive/History of Agreement on Issue </span>
-                                <span ng-if="item.contentType == 'anti'"> Conservative/History of Opposition </span>
+                            <strong>
+                                Script for
+                                    <span ng-if="item.contentType == 'pro'"> Progressive/History of Agreement on Issue </span>
+                                    <span ng-if="item.contentType == 'anti'"> Conservative/History of Opposition </span>
+                            </strong>
                         </h4>
                         <p> {{item.content}} </p>
                     </div>

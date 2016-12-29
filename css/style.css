@@ -167,6 +167,28 @@ body {
     margin: 0 5px;
 }
 
+.select-container {
+    padding:5px;
+    text-align: center;
+}
+
+.select-container > select {
+    width: 155px;
+}
+
+.inline-style {
+    width: 38%;
+    display: inline-block;
+}
+
+.street-address {
+    margin-bottom:5px;
+}
+
+.zipcode {
+    width: 20%;
+}
+
 /* Home Page Carousel */
 
 header.carousel {

@@ -1,4 +1,4 @@
-var app = angular.module('callToActionApp', ['ngRoute', 'ui.bootstrap']);
+var app = angular.module('callToActionApp', ['ngRoute', 'ui.bootstrap', 'ngMap']);
 
 app.config(function($routeProvider) {
     $routeProvider
@@ -7,6 +7,9 @@ app.config(function($routeProvider) {
         .when("/about", {templateUrl: "templates/about.html", controller: "mainCtrl"})
         .when("/issues", {templateUrl: "templates/issues.html", controller: "mainCtrl"})
         .when("/faq", {templateUrl: "templates/faq.html", controller: "mainCtrl"})
+        .when("/call_to_action", {templateUrl: "templates/call_to_action.html", controller: "mainCtrl"})
+        .when("/leadership", {templateUrl: "templates/leaders.html", controller: "mainCtrl"})
+        .when("/committees", {templateUrl: "templates/committees.html", controller: "mainCtrl"})
         .when("/404", {templateUrl: "templates/404.html", controller: "mainCtrl"})
         .when("/reps", {templateUrl: "templates/reps.html", controller: "mainCtrl"})
         .when("/senators", {templateUrl: "templates/senators.html", controller: "mainCtrl"})
@@ -16,7 +19,7 @@ app.config(function($routeProvider) {
         .otherwise({redirectTo: '/'});
 });
 
-app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $http) {
+app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $http, NgMap) {
 
     $scope.$route = $route;
     $scope.$location = $location;
@@ -90,7 +93,12 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
         }
     ];
 
+    $scope.address = '';
 
+    $scope.placeChanged = function() {
+        $scope.place = this.getPlace();
+        console.log('location', $scope.place.geometry.location);
 
+    };
 
 });
