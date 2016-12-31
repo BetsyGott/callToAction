@@ -10,6 +10,21 @@ body {
     font-family: "Alegreya Sans", sans-serif;
 }
 
+.page-title {
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    top: 50px;
+    left: 1%;
+    width: 75%;
+}
+
+.page-subtitle {
+    position: absolute;
+    top: 50%;
+    left: 1%;
+    letter-spacing: 4px;
+}
+
 .light {
     font-weight: 300;
 }
@@ -63,7 +78,7 @@ body {
     /*background-position: 0 40%;*/
 }
 
-.jumbotron .container {
+.call-to-act-container {
     background: rgba(255,255,255,0.4);
     width: 60%;
     padding: 20px 20px 40px 20px;
@@ -73,6 +88,21 @@ body {
     bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.call-to-act-container.lg-width {
+    width: 75%;
+    height: 80vh;
+    padding: 20px;
+}
+
+.call-to-act-container.lg-width .call-to-act-body {
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
 }
 
 .call-to-act-body {

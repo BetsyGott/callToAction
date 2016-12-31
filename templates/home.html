@@ -1,14 +1,24 @@
 <div class="home-container">
     <div class="jumbotron text-center home-splash">
-        <h1 class="text-uppercase">Speak United</h1>
-        <div class="container">
-        <!--<h1 class="text-uppercase">Call to Action</h1>-->
-        <div class="call-to-act-body">
-            <h2>Week of 11/26/2016</h2>
-            <p>End the violence against North Dakota Access Pipeline protesters.</p>
-            <button class="btn btn-lg call-btn">Get Started</button>
+        <h1 class="text-uppercase page-title hidden-xs">
+            <svg width="100%">
+                <text x="0" y="100px" font-size="120px" stroke="#fff" stroke-width="5.0" fill="transparent">
+                    <tspan>Speak United</tspan>
+                </text>
+            </svg>
+            <svg width="100%" class="page-subtitle">
+                <text x="0" y="50px" font-size="30px" stroke="#fff" stroke-width="1.5" fill="transparent">
+                    <tspan>Our Voice Will Be Heard</tspan>
+                </text>
+            </svg>
+        </h1>
+        <div class="container call-to-act-container">
+            <div class="call-to-act-body">
+                <h2>Week of 11/26/2016</h2>
+                <p>End the violence against North Dakota Access Pipeline protesters.</p>
+                <a href="#!/call_to_action"><button class="btn btn-lg call-btn">Speak Up</button></a>
+            </div>
         </div>
-    </div>
     </div>
 
 
@@ -58,20 +68,19 @@
 
     <!--</div>-->
 
-    <div class="container">
+    <!--<div class="container">-->
 
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>Want to reach your elected representatives on a specific issue?</h2>
-                <p>Start typing your address to locate your representative:</p>
-                <!--<input id="autocomplete" placeholder="Enter your address" ng-focus="geolocate()" type="text">-->
-                <input places-auto-complete size=80
-                       ng-model="address"
-                       component-restrictions="{country:'us'}"
-                       on-place-changed="placeChanged()" />
-                <p>{{address}}</p>
-            </div>
-        </div>
+        <!--<div class="row">-->
+            <!--<div class="col-lg-12">-->
+                <!--<h2>Want to reach your elected representatives on a specific issue?</h2>-->
+                <!--<p>Start typing your address to locate your representative:</p>-->
+                <!--<input places-auto-complete size=80-->
+                       <!--ng-model="address"-->
+                       <!--component-restrictions="{country:'us'}"-->
+                       <!--on-place-changed="placeChanged()" />-->
+                <!--<p>{{address}}</p>-->
+            <!--</div>-->
+        <!--</div>-->
 
-    </div>
+    <!--</div>-->
 </div>

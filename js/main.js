@@ -99,6 +99,10 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
         $scope.place = this.getPlace();
         console.log('location', $scope.place.geometry.location);
 
+        //send address to ajax calls for rep/senators
+        //show reps in boxes that allow you to contact them in a variety of ways
+
+
     };
 
 });
