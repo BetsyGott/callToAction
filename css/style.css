@@ -116,6 +116,22 @@ body {
     margin-top:0;
 }
 
+.rep-card {
+    border: 2px solid black;
+    width: 400px;
+    text-align: center;
+}
+
+.rep-image {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
 .call-btn{
     background: rgba(99,149,193,0.8);
     border: 1px solid white;

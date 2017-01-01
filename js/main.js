@@ -124,6 +124,8 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
         console.log('location', $scope.place.formatted_address);
         $scope.address = $scope.place.formatted_address;
 
+        //todo save address in localStorage
+
         //send address to ajax calls for rep/senators
         $scope.getCongress($scope.address, 'senate');
         $scope.getCongress($scope.address, 'house');
