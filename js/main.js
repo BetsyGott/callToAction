@@ -93,21 +93,40 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
         }
     ];
 
+    $scope.place = {};
     $scope.address = '';
+    $scope.rep = {};
+    $scope.senator1 = {};
+    $scope.senator2 = {};
 
     $scope.getCongress = function(address, type) {
-        $http.get('http://api.speakunited.us:8080/contacts', {address: address, type: type})
+
+        var query = 'http://api.speakunited.us:8080/contacts?address='+address+'&type='+type;
+
+        $http.get(query)
             .then(function(response) {
-               console.log(response);
+
+                console.log(response.data);
+
+                if(type === 'senate') {
+                    $scope.senator1 = response.data[0];
+                    $scope.senator2 = response.data[1];
+                } else {
+                    $scope.rep = response.data[0];
+                }
+
             });
+
     };
 
     $scope.placeChanged = function() {
         $scope.place = this.getPlace();
-        console.log('location', $scope.place.geometry.location);
+        console.log('location', $scope.place.formatted_address);
+        $scope.address = $scope.place.formatted_address;
 
         //send address to ajax calls for rep/senators
         $scope.getCongress($scope.address, 'senate');
+        $scope.getCongress($scope.address, 'house');
         //show reps in boxes that allow you to contact them in a variety of ways
 
 
