@@ -134,4 +134,8 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
 
     };
 
+    $scope.changeToMyRepsPage = function(){
+        $location.path('/my_reps');
+    }
+
 });

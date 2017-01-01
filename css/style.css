@@ -34,6 +34,10 @@ body {
     font-size: 110%;
 }
 
+.double-white-border {
+    border: 10px double #fff;
+}
+
 .nav>li>a:focus,
 .nav>li>a:hover,
 .nav>li>a:active,
@@ -75,14 +79,12 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: bottom left;
-    /*background-position: 0 40%;*/
 }
 
 .call-to-act-container {
     background: rgba(255,255,255,0.4);
     width: 60%;
     padding: 20px 20px 40px 20px;
-    border: 10px double white;
     color: #153661;
     position: absolute;
     bottom: 10%;
@@ -130,6 +132,26 @@ body {
     height: 150px;
     border-radius: 50%;
     margin: 0 auto;
+}
+
+.highlight-buttons, .secondary-buttons {
+    margin-bottom: 1%;
+}
+
+.highlight-buttons button {
+    font-size: 1.1em;
+    padding: 2% 6%;
+    background: #a97da9;
+    color: white;
+    border-color: black;
+}
+
+.secondary-buttons button {
+    font-size: .9em;
+    padding: 1% 4%;
+    background: #8581af;
+    color: white;
+    border-color: black;
 }
 
 .call-btn{
