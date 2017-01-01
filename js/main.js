@@ -95,11 +95,19 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
 
     $scope.address = '';
 
+    $scope.getCongress = function(address, type) {
+        $http.get('http://api.speakunited.us:8080/contacts', {address: address, type: type})
+            .then(function(response) {
+               console.log(response);
+            });
+    };
+
     $scope.placeChanged = function() {
         $scope.place = this.getPlace();
         console.log('location', $scope.place.geometry.location);
 
         //send address to ajax calls for rep/senators
+        $scope.getCongress($scope.address, 'senate');
         //show reps in boxes that allow you to contact them in a variety of ways
 
 
