@@ -1,6 +1,7 @@
 
     <div class="home-splash">
-        <div class="call-to-act-container double-white-border lg-width">
+
+        <div class="call-to-act-container double-white-border lg-width" ng-hide="hideCallToAct">
             <div class="call-to-act-body text-center">
                 <div class="input-field">
                     <h2>Week of 11/26/2016</h2>
@@ -11,7 +12,19 @@
                            component-restrictions="{country:'us'}"
                            on-place-changed="placeChanged()" />
                 </div>
-                <div class="response-field">
+
+            </div>
+        </div>
+
+
+        <div class="rep-container double-white-border" ng-show="hideCallToAct">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="text-center">Your Representatives:</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
                     <div class="rep-card">
                         <h2>Rep. {{rep.name}}</h2>
                         <p><small>{{rep.party}}</small></p>
@@ -40,34 +53,64 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="rep-card">
-        <h2>Rep. {{rep.name}}</h2>
-        <p><small>{{rep.party}}</small></p>
-        <div class="rep-image" style="background:url({{rep.photoUrl}}) no-repeat top center;"></div>
-        <p>{{rep.website}}</p>
-        <div class="buttons">
-            <div class="highlight-buttons">
-                <button class="btn"
-                        title="(opens up modal with phone #s available to click, and template of what to say)">
-                    Call
-                </button>
-                <button class="btn">Write a Letter</button>
-            </div>
-            <div class="secondary-buttons">
-                <button class="btn">Email</button>
-                <button class="btn">Fax</button>
-                <button class="btn">
-                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
-                    &nbsp;Post
-                </button>
-                <button class="btn">
-                    <i class="fa fa-twitter-square" aria-hidden="true"></i>
-                    @ {{rep.name}}
-                </button>
+                <div class="col-lg-4">
+                    <div class="rep-card">
+                        <h2>Rep. {{rep.name}}</h2>
+                        <p><small>{{rep.party}}</small></p>
+                        <div class="rep-image" style="background:url({{rep.photoUrl}}) no-repeat top center;"></div>
+                        <p>{{rep.website}}</p>
+                        <div class="buttons">
+                            <div class="highlight-buttons">
+                                <button class="btn"
+                                        title="(opens up modal with phone #s available to click, and template of what to say)">
+                                    Call
+                                </button>
+                                <button class="btn">Write a Letter</button>
+                            </div>
+                            <div class="secondary-buttons">
+                                <button class="btn">Email</button>
+                                <button class="btn">Fax</button>
+                                <button class="btn">
+                                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                                    &nbsp;Post
+                                </button>
+                                <button class="btn">
+                                    <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                                    @ {{rep.name}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="rep-card">
+                        <h2>Rep. {{rep.name}}</h2>
+                        <p><small>{{rep.party}}</small></p>
+                        <div class="rep-image" style="background:url({{rep.photoUrl}}) no-repeat top center;"></div>
+                        <p>{{rep.website}}</p>
+                        <div class="buttons">
+                            <div class="highlight-buttons">
+                                <button class="btn"
+                                        title="(opens up modal with phone #s available to click, and template of what to say)">
+                                    Call
+                                </button>
+                                <button class="btn">Write a Letter</button>
+                            </div>
+                            <div class="secondary-buttons">
+                                <button class="btn">Email</button>
+                                <button class="btn">Fax</button>
+                                <button class="btn">
+                                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                                    &nbsp;Post
+                                </button>
+                                <button class="btn">
+                                    <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                                    @ {{rep.name}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

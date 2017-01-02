@@ -118,10 +118,19 @@ body {
     margin-top:0;
 }
 
+.rep-container {
+    background: rgba(255,255,255,0.4);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .rep-card {
-    border: 2px solid black;
-    width: 400px;
+    background: rgba(255,255,255,0.8);
+    border: 1px solid grey;
+    border-radius: 15px;
     text-align: center;
+    padding: 5px;
 }
 
 .rep-image {

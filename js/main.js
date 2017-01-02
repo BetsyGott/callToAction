@@ -3,7 +3,6 @@ var app = angular.module('callToActionApp', ['ngRoute', 'ui.bootstrap', 'ngMap']
 app.config(function($routeProvider) {
     $routeProvider
         .when('/', {templateUrl: 'templates/home.html', controller: 'mainCtrl'})
-        // Pages
         .when("/about", {templateUrl: "templates/about.html", controller: "mainCtrl"})
         .when("/issues", {templateUrl: "templates/issues.html", controller: "mainCtrl"})
         .when("/faq", {templateUrl: "templates/faq.html", controller: "mainCtrl"})
@@ -14,12 +13,11 @@ app.config(function($routeProvider) {
         .when("/reps", {templateUrl: "templates/reps.html", controller: "mainCtrl"})
         .when("/senators", {templateUrl: "templates/senators.html", controller: "mainCtrl"})
         .when("/tips", {templateUrl: "templates/tips.html", controller: "mainCtrl"})
-        /* etc… routes to other pages… */
-        // else 404
+        .when("/my_reps", {templateUrl: "templates/my_reps.html", controller: "mainCtrl"})
         .otherwise({redirectTo: '/'});
 });
 
-app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $http, NgMap) {
+app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $http, $q, NgMap) {
 
     $scope.$route = $route;
     $scope.$location = $location;
@@ -95,41 +93,34 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
 
     $scope.place = {};
     $scope.address = '';
-    $scope.rep = {};
-    $scope.senator1 = {};
-    $scope.senator2 = {};
-
-    $scope.getCongress = function(address, type) {
-
-        var query = 'http://api.speakunited.us:8080/contacts?address='+address+'&type='+type;
-
-        $http.get(query)
-            .then(function(response) {
-
-                console.log(response.data);
-
-                if(type === 'senate') {
-                    $scope.senator1 = response.data[0];
-                    $scope.senator2 = response.data[1];
-                } else {
-                    $scope.rep = response.data[0];
-                }
-
-            });
-
-    };
+    $scope.reps = [];
+    $scope.hideCallToAct = false;
 
     $scope.placeChanged = function() {
+
         $scope.place = this.getPlace();
-        console.log('location', $scope.place.formatted_address);
+        // console.log('location', $scope.place.formatted_address);
         $scope.address = $scope.place.formatted_address;
 
         //todo save address in localStorage
 
-        //send address to ajax calls for rep/senators
-        $scope.getCongress($scope.address, 'senate');
-        $scope.getCongress($scope.address, 'house');
-        //show reps in boxes that allow you to contact them in a variety of ways
+        $q.all([
+                $http.get('http://api.speakunited.us:8080/contacts?address='+$scope.address+'&type=senate'),
+                $http.get('http://api.speakunited.us:8080/contacts?address='+$scope.address+'&type=house')
+            ]).then(function(result){
+
+                for(var i in result){
+
+                    var resultArr = result[i].data;
+
+                    for(var j in resultArr){
+                        $scope.reps.push(resultArr[j]);
+                    }
+                }
+
+                // $scope.changeToMyRepsPage();
+                $scope.hideCallToAct = true;
+            });
 
 
     };
