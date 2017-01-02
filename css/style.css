@@ -123,6 +123,8 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    width:100%;
+    padding: 0 25px 25px 25px;
 }
 
 .rep-card {
@@ -143,24 +145,31 @@ body {
     margin: 0 auto;
 }
 
+.buttons {
+    margin-top: 15px;
+}
+
 .highlight-buttons, .secondary-buttons {
-    margin-bottom: 1%;
+    margin: 2%;
 }
 
 .highlight-buttons button {
     font-size: 1.1em;
     padding: 2% 6%;
     background: #a97da9;
-    color: white;
-    border-color: black;
+    color: #fff;
+    border-color: #000;
+    margin: 0 3%;
 }
 
 .secondary-buttons button {
     font-size: .9em;
     padding: 1% 4%;
     background: #8581af;
-    color: white;
-    border-color: black;
+    color: #fff;
+    border-color: #000;
+    margin-bottom: 5px;
+    margin-left: 2%;
 }
 
 .call-btn{
