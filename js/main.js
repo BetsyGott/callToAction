@@ -13,11 +13,11 @@ app.config(function($routeProvider) {
         .when("/reps", {templateUrl: "templates/reps.html", controller: "mainCtrl"})
         .when("/senators", {templateUrl: "templates/senators.html", controller: "mainCtrl"})
         .when("/tips", {templateUrl: "templates/tips.html", controller: "mainCtrl"})
-        .when("/my_reps", {templateUrl: "templates/my_reps.html", controller: "mainCtrl"})
+        .when("/my_reps", {templateUrl: "templates/my_reps.html", controller: "repCtrl"})
         .otherwise({redirectTo: '/'});
 });
 
-app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $http, $q, NgMap) {
+app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $http, $q, NgMap, userDataService) {
 
     $scope.$route = $route;
     $scope.$location = $location;
@@ -91,42 +91,97 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
         }
     ];
 
-    $scope.place = {};
-    $scope.address = '';
-    $scope.reps = [];
-    $scope.hideCallToAct = false;
+    // $scope.address = userDataService.getAddress();
 
     $scope.placeChanged = function() {
 
         $scope.place = this.getPlace();
-        // console.log('location', $scope.place.formatted_address);
-        $scope.address = $scope.place.formatted_address;
+        userDataService.setAddress($scope.place.formatted_address);
+
+        console.log("a;flkajs;df");
+        console.log(userDataService.getAddress());
 
         //todo save address in localStorage
 
-        $q.all([
-                $http.get('http://api.speakunited.us:8080/contacts?address='+$scope.address+'&type=senate'),
-                $http.get('http://api.speakunited.us:8080/contacts?address='+$scope.address+'&type=house')
-            ]).then(function(result){
-
-                for(var i in result){
-
-                    var resultArr = result[i].data;
-
-                    for(var j in resultArr){
-                        $scope.reps.push(resultArr[j]);
-                    }
-                }
-
-                // $scope.changeToMyRepsPage();
-                $scope.hideCallToAct = true;
-            });
-
+        userDataService.getRepsFromApi( userDataService.getAddress() )
+           .then(userDataService.setReps)
+           .then(function(reps){
+               $scope.reps = reps;
+               $scope.changeToMyRepsPage();
+           });
 
     };
 
     $scope.changeToMyRepsPage = function(){
         $location.path('/my_reps');
+    }
+
+});
+
+app.controller('repCtrl', function ($scope, userDataService) {
+
+    $scope.reps = userDataService.getReps();
+
+});
+
+app.service('userDataService', function($http, $q){
+
+    this.reps = [];
+    this.address = '';
+    var self = this;
+
+    this.setUserName = function(first, last){
+        this.firstName = first;
+        this.lastName = last;
+        this.fullName = first + " " + last;
+    };
+
+    this.getNames = function(){
+        return {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            fullName: this.fullName
+        }
+    };
+
+    this.setAddress = function(address) {
+        this.address = address;
+    };
+
+    this.getAddress = function(){
+        return this.address;
+    };
+
+    this.getRepsFromApi = function(address){
+
+        return $q.all(
+            [
+                $http.get('http://api.speakunited.us:8080/contacts?address='+address+'&type=senate'),
+                $http.get('http://api.speakunited.us:8080/contacts?address='+address+'&type=house')
+            ]
+        );
+
+    };
+
+    this.setReps = function(result){
+
+        self.reps = [];
+
+        for(var i in result){
+
+            var resultArr = result[i].data;
+
+            for(var j in resultArr){
+                self.reps.push(resultArr[j]);
+            }
+        }
+
+        return $q.when(self.reps);
+
+    };
+
+    this.getReps = function(){
+        return this.reps;
     }
 
 });

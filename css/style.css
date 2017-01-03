@@ -136,13 +136,15 @@ body {
 }
 
 .rep-image {
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
     width: 150px;
     height: 150px;
     border-radius: 50%;
     margin: 0 auto;
+    overflow: hidden;
+}
+
+.rep-image img {
+    width:100%;
 }
 
 .buttons {

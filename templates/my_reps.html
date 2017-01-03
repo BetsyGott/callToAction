@@ -1,71 +1,25 @@
 
 <div class="home-splash">
-    <div class="call-to-act-container double-white-border lg-width">
+
+    <div class="rep-container double-white-border">
         <div class="row">
-            <div class="col-lg-4">
-                <div class="rep-card">
-                    <h2>Rep. {{rep.name}}</h2>
-                    <p><small>{{rep.party}}</small></p>
-                    <div class="rep-image" style="background:url({{rep.photoUrl}}) no-repeat top center;"></div>
-                    <p>{{rep.website}}</p>
-                    <div class="buttons">
-                        <div class="highlight-buttons">
-                            <button class="btn"
-                                    title="(opens up modal with phone #s available to click, and template of what to say)">
-                                Call
-                            </button>
-                            <button class="btn">Write a Letter</button>
-                        </div>
-                        <div class="secondary-buttons">
-                            <button class="btn">Email</button>
-                            <button class="btn">Fax</button>
-                            <button class="btn">
-                                <i class="fa fa-facebook-square" aria-hidden="true"></i>
-                                &nbsp;Post
-                            </button>
-                            <button class="btn">
-                                <i class="fa fa-twitter-square" aria-hidden="true"></i>
-                                @ {{rep.name}}
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-lg-12">
+                <h2 class="text-center">Your Representatives:</h2>
             </div>
-            <div class="col-lg-4">
+        </div>
+        <div class="row">
+            <div class="col-lg-4" ng-repeat="rep in reps">
                 <div class="rep-card">
-                    <h2>Rep. {{rep.name}}</h2>
-                    <p><small>{{rep.party}}</small></p>
-                    <div class="rep-image" style="background:url({{rep.photoUrl}}) no-repeat top center;"></div>
-                    <p>{{rep.website}}</p>
-                    <div class="buttons">
-                        <div class="highlight-buttons">
-                            <button class="btn"
-                                    title="(opens up modal with phone #s available to click, and template of what to say)">
-                                Call
-                            </button>
-                            <button class="btn">Write a Letter</button>
-                        </div>
-                        <div class="secondary-buttons">
-                            <button class="btn">Email</button>
-                            <button class="btn">Fax</button>
-                            <button class="btn">
-                                <i class="fa fa-facebook-square" aria-hidden="true"></i>
-                                &nbsp;Post
-                            </button>
-                            <button class="btn">
-                                <i class="fa fa-twitter-square" aria-hidden="true"></i>
-                                @ {{rep.name}}
-                            </button>
-                        </div>
+                    <h3>
+                        <span ng-show="rep.type === 'house' " >Rep. </span>
+                        <span ng-show="rep.type === 'senate' " >Sen. </span>
+                        {{rep.name}}
+                        <span ng-show="rep.party === 'Democratic' ">(D)</span>
+                        <span ng-show="rep.party === 'Republican' ">(R)</span>
+                    </h3>
+                    <div class="rep-image">
+                        <img ng-src="{{rep.photoUrl}}">
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="rep-card">
-                    <h2>Rep. {{rep.name}}</h2>
-                    <p><small>{{rep.party}}</small></p>
-                    <div class="rep-image" style="background:url({{rep.photoUrl}}) no-repeat top center;"></div>
-                    <p>{{rep.website}}</p>
                     <div class="buttons">
                         <div class="highlight-buttons">
                             <button class="btn"
@@ -81,9 +35,13 @@
                                 <i class="fa fa-facebook-square" aria-hidden="true"></i>
                                 &nbsp;Post
                             </button>
+                            <br>
                             <button class="btn">
                                 <i class="fa fa-twitter-square" aria-hidden="true"></i>
                                 @ {{rep.name}}
+                            </button>
+                            <button class="btn">
+                                Visit Website
                             </button>
                         </div>
                     </div>
