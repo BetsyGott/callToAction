@@ -23,10 +23,6 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
 
-    $scope.visitorName = '';
-    $scope.representative = '';
-    $scope.senators = [];
-
     $scope.issues = [
         {
             title: "Health Care",
@@ -118,9 +114,16 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
 
 });
 
-app.controller('repCtrl', function ($scope, userDataService) {
+app.controller('repCtrl', function ($scope, userDataService, issueService) {
 
     $scope.reps = userDataService.getReps();
+
+    $scope.getIssues = function(){
+        issueService.getIssues()
+            .then(function(response){
+                $scope.issues = response.data;
+            });
+    }
 
 });
 
@@ -182,6 +185,16 @@ app.service('userDataService', function($http, $q){
 
     this.getReps = function(){
         return this.reps;
+    }
+
+});
+
+app.service('issueService', function($http, $q){
+
+    var self = this;
+
+    this.getIssues = function (name, repName) {
+        return $http.get('http://api.speakunited.us:8080/issues?name='+name+'&repName='+repName);
     }
 
 });
