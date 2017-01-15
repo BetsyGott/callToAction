@@ -1,5 +1,5 @@
 
-<div class="home-splash">
+<div class="home-splash" ng-controller="repCtrl as rc">
 
     <div class="rep-container double-white-border">
         <div class="row">
@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4" ng-repeat="rep in reps">
+            <div class="col-lg-4" ng-repeat="rep in rc.reps">
                 <div class="rep-card">
                     <h3>
                         <span ng-show="rep.type === 'house' " >Rep. </span>
@@ -27,19 +27,21 @@
                             <button class="btn">Write a Letter</button>
                         </div>
                         <div class="secondary-buttons">
-                            <button class="btn">Email</button>
-                            <button class="btn">Fax</button>
-                            <button class="btn">
+                            <!--<button class="btn">Email</button>-->
+                            <button class="btn" ng-if="rep.dcFax || rep.districtFax">Fax</button>
+                            <button class="btn" ng-if="rep.socialMedia.facebook">
                                 <i class="fa fa-facebook-square" aria-hidden="true"></i>
                                 &nbsp;Post
                             </button>
-                            <br>
-                            <button class="btn">
+                            <!--<br>-->
+                            <button class="btn" ng-if="rep.socialMedia.twitter">
                                 <i class="fa fa-twitter-square" aria-hidden="true"></i>
                                 @ {{rep.name}}
                             </button>
-                            <button class="btn">
-                                Visit Website
+                            <button class="btn" ng-if="rep.website">
+                                <a ng-href="{{rep.website}}" target="_blank">
+                                    Visit Website
+                                </a>
                             </button>
                         </div>
                     </div>

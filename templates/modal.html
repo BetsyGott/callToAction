@@ -10,10 +10,10 @@
                 <div ng-if=" type == 'phone' ">
                     <ul class="phone-group">
                         <li ng-if="rep.districtPhone">
-                            District Office: <a ng-href="tel: {{rep.districtPhone}}">{{rep.districtPhone}}</a>
+                            District Office: <a ng-href="tel: +1-{{rep.districtPhone | formatPhone}}">{{rep.districtPhone}}</a>
                         </li>
                         <li ng-if="rep.dcPhone">
-                            DC Office: <a ng-href="tel: {{rep.dcPhone}}">{{rep.dcPhone}}</a>
+                            DC Office: <a ng-href="tel:+1-{{rep.dcPhone | formatPhone}}">{{rep.dcPhone}}</a>
                         </li>
                     </ul>
                 </div>

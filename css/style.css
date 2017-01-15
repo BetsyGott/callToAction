@@ -143,6 +143,7 @@ body {
     border-radius: 15px;
     text-align: center;
     padding: 5px;
+    height: 380px;
 }
 
 .rep-image {
@@ -182,6 +183,11 @@ body {
     border-color: #000;
     margin-bottom: 5px;
     margin-left: 2%;
+}
+
+.secondary-buttons button a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .call-btn{

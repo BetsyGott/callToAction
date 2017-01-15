@@ -124,7 +124,7 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
     $scope.getIssues = function(){
         issueService.callForIssues()
             .then(function (response) {
-                console.log(response.data);
+                // console.log(response.data);
                issueService.setIssues(response.data);
                $scope.issues = issueService.getIssues();
 
@@ -138,74 +138,83 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
 
 });
 
-app.controller('repCtrl', function ($scope, userDataService, issueService, ModalService) {
+app.controller('repCtrl', ['$scope','userDataService', 'issueService', 'ModalService', function ($scope, userDataService, issueService, ModalService) {
 
     var repCtrl = this;
 
-    $scope.reps = userDataService.getReps();
-    repCtrl.issues = issueService.getIssues();
-    $scope.name = userDataService.getNames();
-    console.log("issues in rep ctrl:", repCtrl.issues);
+    this.reps = userDataService.getReps();
+    this.issues = issueService.getIssues();
+    this.name = userDataService.getNames();
+
+    console.log("reps in rep ctrl", this.reps);
 
     $scope.callRep = function(rep) {
 
         ModalService.showModal({
             templateUrl: "templates/modal.html",
+            controller: "modalCtrl",
             inputs: {
                 rep: rep,
-                issues: repCtrl.issues,
                 type: 'phone',
-                name: $scope.name
-            },
-            controller: function($scope, rep, issues, type, name){
-
-                var self = this;
-
-                $scope.type = type;
-                $scope.rep = rep;
-                self.issues = issues;
-                $scope.name = name.fullName;
-
-                $scope.modifyScripts = function() {
-
-                    $scope.modifiedIssues = JSON.parse(JSON.stringify(self.issues));
-
-                    for(var i = 0; i < $scope.modifiedIssues.length; i++) {
-                        for (var j = 0; j < $scope.modifiedIssues[i].scripts.length; j++) {
-                            if($scope.name){
-                                var replaceName = $scope.modifiedIssues[i].scripts[j].text.replace(/\[name\]/g, $scope.name);
-                                $scope.modifiedIssues[i].scripts[j].text = replaceName;
-                            }
-
-                            if($scope.rep.type == 'senate'){
-                                var replaceRep = $scope.modifiedIssues[i].scripts[j].text.replace(/\[repName\]/g, 'Senator ' + $scope.rep.lastName);
-
-                            } else {
-                                replaceRep = $scope.modifiedIssues[i].scripts[j].text.replace(/\[repName\]/g, 'Representative ' + $scope.rep.lastName);
-
-                            }
-
-                            $scope.modifiedIssues[i].scripts[j].text = replaceRep;
-
-
-                        }
-                    }
-                };
-
-                $scope.modifyScripts();
-
-
+                name: repCtrl.name
             }
+
         }).then(function(modal) {
             modal.element.modal();
             modal.close.then(function(result) {
                 console.log(result);
             });
+        }).catch(function(error) {
+            // error contains a detailed error message.
+            console.log(error);
         });
 
     };
 
-});
+}]);
+
+app.controller('modalCtrl', ['$scope', 'formatPhoneFilter', 'issueService', 'rep', 'type', 'name', 'close', function($scope, formatPhoneFilter, issueService, rep, type, name, close){
+
+    var self = this;
+
+    $scope.type = type;
+    $scope.rep = rep;
+    this.issues = issueService.getIssues();
+    $scope.name = name? name.fullName : '';
+
+    console.log('rep in modal ctrl',rep);
+
+    $scope.modifyScripts = function() {
+
+        console.log(self.issues);
+        $scope.modifiedIssues = JSON.parse(JSON.stringify(self.issues));
+
+        for(var i = 0; i < $scope.modifiedIssues.length; i++) {
+            for (var j = 0; j < $scope.modifiedIssues[i].scripts.length; j++) {
+                if($scope.name){
+                    var replaceName = $scope.modifiedIssues[i].scripts[j].text.replace(/\[name\]/g, $scope.name);
+                    $scope.modifiedIssues[i].scripts[j].text = replaceName;
+                }
+
+                if($scope.rep.type == 'senate'){
+                    var replaceRep = $scope.modifiedIssues[i].scripts[j].text.replace(/\[repName\]/g, 'Senator ' + $scope.rep.lastName);
+
+                } else {
+                    replaceRep = $scope.modifiedIssues[i].scripts[j].text.replace(/\[repName\]/g, 'Representative ' + $scope.rep.lastName);
+
+                }
+
+                $scope.modifiedIssues[i].scripts[j].text = replaceRep;
+
+
+            }
+        }
+    };
+
+    $scope.modifyScripts();
+
+
+}]);
 
 // app.controller('homeCtrl', function ($scope, $http, $q, issueService) {
 //
@@ -307,4 +316,23 @@ app.service('userDataService', function($http, $q){
         return this.reps;
     }
 
+});
+
+app.filter('formatPhone', function() {
+    return function(number) {
+        number = number || '';
+        var formattedNumber = '';
+
+        var stripSpecialChars = number.replace(/[\(\)-\s]/g, '');
+
+        var hyphen = "-";
+        var position = 6;
+        var output = [stripSpecialChars.slice(0, position), hyphen, stripSpecialChars.slice(position)].join('');
+
+        var a = output;
+        position = 3;
+        formattedNumber = [a.slice(0, position), hyphen, a.slice(position)].join('');
+
+        return formattedNumber;
+    };
 });
