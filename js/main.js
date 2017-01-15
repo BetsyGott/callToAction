@@ -96,10 +96,13 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
         $scope.place = this.getPlace();
         userDataService.setAddress($scope.place.formatted_address);
 
-        console.log("a;flkajs;df");
+        if($scope.userFullName){
+            userDataService.saveName($scope.userFullName);
+        }
+
         console.log(userDataService.getAddress());
 
-        //todo save address in localStorage
+        //todo save address and name in localStorage
 
         userDataService.getRepsFromApi( userDataService.getAddress() )
            .then(userDataService.setReps)
@@ -137,9 +140,12 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
 
 app.controller('repCtrl', function ($scope, userDataService, issueService, ModalService) {
 
+    var repCtrl = this;
+
     $scope.reps = userDataService.getReps();
-    $scope.issues = issueService.getIssues();
-    console.log($scope.issues);
+    repCtrl.issues = issueService.getIssues();
+    $scope.name = userDataService.getNames();
+    console.log("issues in rep ctrl:", repCtrl.issues);
 
     $scope.callRep = function(rep) {
 
@@ -147,17 +153,48 @@ app.controller('repCtrl', function ($scope, userDataService, issueService, Modal
             templateUrl: "templates/modal.html",
             inputs: {
                 rep: rep,
-                issues: $scope.issues,
-                type: 'phone'
+                issues: repCtrl.issues,
+                type: 'phone',
+                name: $scope.name
             },
-            controller: function($scope, rep, issues, type){
+            controller: function($scope, rep, issues, type, name){
+
+                var self = this;
+
                 $scope.type = type;
                 $scope.rep = rep;
-                $scope.issues = issues;
-                $scope.phoneScript =
-                console.log($scope.rep);
-                console.log("issues:", $scope.issues);
-                console.log('type', $scope.type);
+                self.issues = issues;
+                $scope.name = name.fullName;
+
+                $scope.modifyScripts = function() {
+
+                    $scope.modifiedIssues = JSON.parse(JSON.stringify(self.issues));
+
+                    for(var i = 0; i < $scope.modifiedIssues.length; i++) {
+                        for (var j = 0; j < $scope.modifiedIssues[i].scripts.length; j++) {
+                            if($scope.name){
+                                var replaceName = $scope.modifiedIssues[i].scripts[j].text.replace(/\[name\]/g, $scope.name);
+                                $scope.modifiedIssues[i].scripts[j].text = replaceName;
+                            }
+
+                            if($scope.rep.type == 'senate'){
+                                var replaceRep = $scope.modifiedIssues[i].scripts[j].text.replace(/\[repName\]/g, 'Senator ' + $scope.rep.lastName);
+
+                            } else {
+                                replaceRep = $scope.modifiedIssues[i].scripts[j].text.replace(/\[repName\]/g, 'Representative ' + $scope.rep.lastName);
+
+                            }
+
+                            $scope.modifiedIssues[i].scripts[j].text = replaceRep;
+
+
+                        }
+                    }
+                };
+
+                $scope.modifyScripts();
+
+
             }
         }).then(function(modal) {
             modal.element.modal();
@@ -184,23 +221,11 @@ app.controller('repCtrl', function ($scope, userDataService, issueService, Modal
 //
 // });
 
-app.controller('YesNoController', ['$scope', 'close', function($scope, close) {
-
-    $scope.close = function(result) {
-        close(result, 500); // close, but give 500ms for bootstrap to animate
-    };
-
-}]);
-
 app.service('issueService', function($http){
 
     var self = this;
 
     this.issues = [];
-
-    // this.getIssues = function (name, repName) {
-    //     return $http.get('http://api.speakunited.us:8080/issues?name='+name+'&repName='+repName);
-    // }
 
     this.getIssues = function(){
         return this.issues;
@@ -227,18 +252,17 @@ app.service('userDataService', function($http, $q){
 
     this.reps = [];
     this.address = '';
+    this.fullName = '';
     var self = this;
 
-    this.setUserName = function(first, last){
-        this.firstName = first;
-        this.lastName = last;
-        this.fullName = first + " " + last;
+    this.saveName = function(name){
+        this.fullName = name;
     };
 
     this.getNames = function(){
         return {
-            firstName: this.firstName,
-            lastName: this.lastName,
+            // firstName: this.firstName,
+            // lastName: this.lastName,
             fullName: this.fullName
         }
     };

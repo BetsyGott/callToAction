@@ -318,23 +318,21 @@ header.carousel .fill {
     font-size: 100px;
 }
 
-/* Pricing Page Styles */
+/* Script Modal styles */
 
-.price {
-    display: block;
-    font-size: 50px;
-    line-height: 50px;
+.phone-group {
+    list-style: none;
+    background: #d9edf7;
+    padding: 10px 0 10px 10px;
+     text-align: center;
+    font-weight: 600;
+    font-size: 115%;
+    border-radius: 5px;
 }
 
-.price sup {
-    top: -20px;
-    left: 2px;
-    font-size: 20px;
-}
-
-.period {
-    display: block;
-    font-style: italic;
+.phone-group li {
+    display: inline-block;
+    margin-right: 5%;
 }
 
 /* Footer Styles */
@@ -361,9 +359,3 @@ footer {
         height: 70%;
     }
 }
-
-
-/* todo change font to something with bold/thin, like lato or josefin slab,  */
-/* todo fix the spacing and look of panels on main */
-/* todo change 'contact xxx' to uppercase, mess around with uppercase in other areas*/
-/*todo fix buttons in contact sections on main page, and also call to action button*/
