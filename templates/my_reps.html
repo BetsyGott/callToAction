@@ -1,8 +1,6 @@
 
 <div class="home-splash">
 
-    <!--todo remove-->
-
     <div class="rep-container double-white-border">
         <div class="row">
             <div class="col-lg-12">
@@ -21,10 +19,12 @@
                     </h3>
                     <div class="rep-image">
                         <img ng-src="{{rep.photoUrl}}">
+                        <div class="missing-img" ng-if="!rep.photoUrl"><strong>No Image Found</strong></div>
                     </div>
                     <div class="buttons">
                         <div class="highlight-buttons">
                             <button class="btn"
+                                    ng-click="callRep(rep)"
                                     title="(opens up modal with phone #s available to click, and template of what to say)">
                                 Call
                             </button>

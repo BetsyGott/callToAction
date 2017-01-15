@@ -14,8 +14,20 @@
         </h1>
         <div class="container call-to-act-container double-white-border">
             <div class="call-to-act-body">
-                <h2>Week of 11/26/2016</h2>
-                <p>End the violence against North Dakota Access Pipeline protesters.</p>
+                <h2>Current Action Item:</h2>
+                <h3>{{issues[0].title}}</h3>
+                <div uib-collapse="collapseIssues">
+                    <p>{{issues[0].description}}</p>
+                    <p>{{issues[0].notes}}</p>
+                </div>
+                <div>
+                    <a ng-click="collapseIssues = !collapseIssues">
+                        <i class="fa fa-plus" aria-hidden="true" ng-class="collapseIssues ? 'fa-plus' : 'fa-minus'"></i>
+                        Read
+                        <span ng-if="collapseIssues">More</span>
+                        <span ng-if="!collapseIssues">Less</span>
+                    </a>
+                </div>
                 <a href="#!/call_to_action"><button class="btn btn-lg call-btn">Speak Up</button></a>
             </div>
         </div>

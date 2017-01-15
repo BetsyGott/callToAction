@@ -1,4 +1,4 @@
-var app = angular.module('callToActionApp', ['ngRoute', 'ui.bootstrap', 'ngMap']);
+var app = angular.module('callToActionApp', ['ngRoute', 'ui.bootstrap', 'ngMap', 'ngAnimate', 'angularModalService']);
 
 app.config(function($routeProvider) {
     $routeProvider
@@ -17,11 +17,13 @@ app.config(function($routeProvider) {
         .otherwise({redirectTo: '/'});
 });
 
-app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $http, $q, NgMap, userDataService) {
+app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $http, $q, NgMap, userDataService, issueService) {
 
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
+    $scope.collapseIssues = true;
+    $scope.userFullName = '';
 
     $scope.issues = [
         {
@@ -110,20 +112,114 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
 
     $scope.changeToMyRepsPage = function(){
         $location.path('/my_reps');
-    }
+    };
+
+    $scope.saveUserNameToStorage = function(){
+
+    };
+
+    $scope.getIssues = function(){
+        issueService.callForIssues()
+            .then(function (response) {
+                console.log(response.data);
+               issueService.setIssues(response.data);
+               $scope.issues = issueService.getIssues();
+
+            });
+    };
+
+
+    $scope.getIssues();
+
+
 
 });
 
-app.controller('repCtrl', function ($scope, userDataService, issueService) {
+app.controller('repCtrl', function ($scope, userDataService, issueService, ModalService) {
 
     $scope.reps = userDataService.getReps();
+    $scope.issues = issueService.getIssues();
+    console.log($scope.issues);
 
-    $scope.getIssues = function(){
-        issueService.getIssues()
-            .then(function(response){
-                $scope.issues = response.data;
+    $scope.callRep = function(rep) {
+
+        ModalService.showModal({
+            templateUrl: "templates/modal.html",
+            inputs: {
+                rep: rep,
+                issues: $scope.issues,
+                type: 'phone'
+            },
+            controller: function($scope, rep, issues, type){
+                $scope.type = type;
+                $scope.rep = rep;
+                $scope.issues = issues;
+                $scope.phoneScript =
+                console.log($scope.rep);
+                console.log("issues:", $scope.issues);
+                console.log('type', $scope.type);
+            }
+        }).then(function(modal) {
+            modal.element.modal();
+            modal.close.then(function(result) {
+                console.log(result);
             });
-    }
+        });
+
+    };
+
+});
+
+// app.controller('homeCtrl', function ($scope, $http, $q, issueService) {
+//
+//     $scope.issueService = issueService;
+//
+//     $scope.issues = $scope.issueService.getIssues();
+//
+//     $scope.issueService.callForIssues();
+//
+//     console.log($scope.issues);
+//
+//     console.log("ajsf;lkajsd;fkj");
+//
+// });
+
+app.controller('YesNoController', ['$scope', 'close', function($scope, close) {
+
+    $scope.close = function(result) {
+        close(result, 500); // close, but give 500ms for bootstrap to animate
+    };
+
+}]);
+
+app.service('issueService', function($http){
+
+    var self = this;
+
+    this.issues = [];
+
+    // this.getIssues = function (name, repName) {
+    //     return $http.get('http://api.speakunited.us:8080/issues?name='+name+'&repName='+repName);
+    // }
+
+    this.getIssues = function(){
+        return this.issues;
+    };
+
+    this.setIssues = function (issues) {
+        this.issues = issues;
+    };
+
+    this.callForIssues = function ( name, repName ) {
+        if(name && repName){
+            return $http.get('http://api.speakunited.us:8080/issues?name='+name+'&repName='+repName);
+        } else if (name && !repName){
+            return $http.get('http://api.speakunited.us:8080/issues?name='+name);
+        } else {
+            return $http.get('http://api.speakunited.us:8080/issues');
+        }
+
+    };
 
 });
 
@@ -185,16 +281,6 @@ app.service('userDataService', function($http, $q){
 
     this.getReps = function(){
         return this.reps;
-    }
-
-});
-
-app.service('issueService', function($http, $q){
-
-    var self = this;
-
-    this.getIssues = function (name, repName) {
-        return $http.get('http://api.speakunited.us:8080/issues?name='+name+'&repName='+repName);
     }
 
 });
