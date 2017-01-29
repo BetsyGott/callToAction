@@ -10,19 +10,30 @@ body {
     font-family: "Alegreya Sans", sans-serif;
 }
 
-.page-title {
-    font-family: 'Roboto', sans-serif;
+h1.page-title, h3.page-subtitle {
     position: absolute;
-    top: 50px;
     left: 1%;
-    width: 75%;
+    -webkit-webkit-text-fill-color: white;
+    -moz-webkit-text-fill-color: white;
+    -ms-webkit-text-fill-color: white;
+    -o-webkit-text-fill-color: white;
+    webkit-text-fill-color: white;
+    color: transparent;
+
+    }
+
+h1.page-title {
+    font-size: 5em;
+    font-family: 'Roboto', sans-serif;
+    top: 50px;
+    -webkit-text-stroke: 3px #fff;
 }
 
-.page-subtitle {
-    position: absolute;
-    top: 50%;
-    left: 1%;
+h3.page-subtitle {
+    top: 25%;
     letter-spacing: 4px;
+    -webkit-text-stroke: 2px #fff;
+    font-size: 2.3em;
 }
 
 .light {
@@ -349,19 +360,24 @@ footer {
 
 /* Responsive Styles */
 
-@media(max-width:991px) {
-    .customer-img,
-    .img-related {
-        margin-bottom: 30px;
+@media (max-width: 1545px){
+
+    .home-splash {
+        background-size: cover;
+        background-position: bottom right;
     }
 }
 
-@media(max-width:767px) {
-    .img-portfolio {
-        margin-bottom: 15px;
+@media (min-width: 768px) and (max-width: 991px){
+    .page-title {
+        margin-top: 100px;
+        width: 100%;
     }
+}
 
-    header.carousel .carousel {
-        height: 70%;
+@media (max-width: 320px){
+
+    h1.page-title {
+        font-size: 3em;
     }
 }
