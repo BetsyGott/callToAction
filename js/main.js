@@ -180,16 +180,48 @@ app.controller('repCtrl', ['$scope','userDataService', 'issueService', 'ModalSer
 
 }]);
 
-app.controller('modalCtrl', ['$scope', 'formatPhoneFilter', 'issueService', 'rep', 'type', 'name', 'close', function($scope, formatPhoneFilter, issueService, rep, type, name, close){
+app.controller('modalCtrl', ['$scope', 'formatPhoneFilter', 'issueService', 'userDataService', 'faxService', 'rep', 'type', 'name', 'close', function($scope, formatPhoneFilter, issueService, userDataService, faxService, rep, type, name, close){
 
     var self = this;
 
     $scope.type = type;
     $scope.rep = rep;
     this.issues = issueService.getIssues();
+    $scope.address = userDataService.getAddress();
     $scope.name = name ? name.fullName : '';
+    $scope.showSend = true;
+    $scope.success = false;
 
     console.log('rep in modal ctrl',rep);
+    console.log("address in modal: ", $scope.address);
+
+    $scope.sendFax = function() {
+
+        var body = $(".fax-body").text();
+
+        var data = {
+            bioguideId: $scope.rep.idInfo.bioguide,
+            name: $scope.name,
+            address: $scope.address,
+            header: $scope.modifiedIssues[0].title,
+            body: body
+        };
+
+
+        faxService.sendFax(data)
+            .then(function(response) {
+                console.log("success:", response);
+            }, function(response) {
+                if(response.status == '400' || response.status == '404' || response.status == '500') {
+                    $(".fax-container").html("<p>Sorry, there was a problem trying to send your fax. Please try again later.</p>");
+                    $scope.showSend = false;
+                } else {
+                    $(".fax-preview").html("<p>Fax sent! Thanks for making your voice heard!</p>");
+                    $scope.showSend = false;
+                    $scope.success = true;
+                }
+            });
+    };
 
     $scope.modifyScripts = function() {
 
@@ -261,6 +293,15 @@ app.service('issueService', function($http){
         }
 
     };
+
+});
+
+app.service('faxService', function($http, $q){
+
+    this.sendFax = function(data) {
+
+        return $http.post('http://speakunited.us/api/fax', data);
+    }
 
 });
 

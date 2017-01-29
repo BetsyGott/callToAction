@@ -26,17 +26,28 @@
                     <p><strong>Script:</strong></p>
                     <p>{{ (modifiedIssues[0].scripts | filter:{type: 'phone'}:true | limitTo:1)[0].text }}</p>
                 </div>
-                <div ng-if=" type == 'fax' ">
-                    <h5 class="fax-preview">Preview: </h5>
-                    <h3 class="fax-title">{{ modifiedIssues[0].title }}</h3>
-                    <p class="fax-body">{{ (modifiedIssues[0].scripts | filter:{type: 'mail'}:true | limitTo:1)[0].text }}</p>
+                <div ng-if=" type == 'fax' " class="fax-container">
+                    <h5 class="fax-preview" ng-class="{'bg-success': success, 'bg-info': !success}">Preview: </h5>
+                    <div class="fax-wrapper">
+                        <div class="text-right fax-address">
+                            <p>{{ name }}</p>
+                            <p>{{ address }}</p>
+                        </div>
+                        <h3 class="fax-title">{{ modifiedIssues[0].title }}</h3>
+                        <p class="fax-body">
+                            {{ (modifiedIssues[0].scripts | filter:{type: 'mail'}:true | limitTo:1)[0].text }}
+                        </p>
+                        <p>Sincerely,</p>
+                        <p>{{ name }}</p>
+                    </div>
+
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" ng-click="close(true)" class="btn btn-default" data-dismiss="modal">
                     Close
                 </button>
-                <button type='button' class="btn btn-primary" ng-if=" type == 'fax' ">Send</button>
+                <button type='button' class="btn btn-primary" ng-if=" type == 'fax' && showSend " ng-click="sendFax()">Send</button>
             </div>
         </div>
     </div>

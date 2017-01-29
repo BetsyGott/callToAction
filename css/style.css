@@ -208,8 +208,12 @@ h3.page-subtitle {
     font-weight: 200;
 }
 
+.fax-wrapper {
+    padding: 0 20px;
+}
+
 .fax-preview {
-    background: #e3e3e3;
+    /*background: #e3e3e3;*/
     padding: 4px;
     font-size: 18px;
     margin: 0;
@@ -217,6 +221,10 @@ h3.page-subtitle {
     top: 0;
     left: 0;
     width: 100%;
+}
+
+.fax-address {
+    margin-top: 40px;
 }
 
 .fax-title {
