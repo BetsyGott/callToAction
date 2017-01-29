@@ -94,6 +94,9 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
     $scope.placeChanged = function() {
 
         $scope.place = this.getPlace();
+
+        console.log("address obj:", $scope.place);
+
         userDataService.setAddress($scope.place.formatted_address);
 
         if($scope.userFullName){
@@ -147,14 +150,21 @@ app.controller('repCtrl', ['$scope','userDataService', 'issueService', 'ModalSer
     console.log("reps in rep ctrl", this.reps);
 
     $scope.callRep = function(rep) {
+        $scope.showModal(rep, 'phone', repCtrl.name);
+    };
 
+    $scope.faxRep = function(rep) {
+        $scope.showModal(rep, 'fax', repCtrl.name);
+    };
+
+    $scope.showModal = function(repInfo, type, userName){
         ModalService.showModal({
             templateUrl: "templates/modal.html",
             controller: "modalCtrl",
             inputs: {
-                rep: rep,
-                type: 'phone',
-                name: repCtrl.name
+                rep: repInfo,
+                type: type,
+                name: userName
             }
 
         }).then(function(modal) {
@@ -166,8 +176,7 @@ app.controller('repCtrl', ['$scope','userDataService', 'issueService', 'ModalSer
             // error contains a detailed error message.
             console.log(error);
         });
-
-    };
+    }
 
 }]);
 
@@ -178,7 +187,7 @@ app.controller('modalCtrl', ['$scope', 'formatPhoneFilter', 'issueService', 'rep
     $scope.type = type;
     $scope.rep = rep;
     this.issues = issueService.getIssues();
-    $scope.name = name? name.fullName : '';
+    $scope.name = name ? name.fullName : '';
 
     console.log('rep in modal ctrl',rep);
 
@@ -334,3 +343,7 @@ app.filter('formatPhone', function() {
         return formattedNumber;
     };
 });
+
+
+// todo make adding your name mandatory, include text: 'we will automatically fill out our templates with your name.'
+//todo save name and address in local storage using $storage service
