@@ -91,6 +91,10 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
 
     // $scope.address = userDataService.getAddress();
 
+    $scope.showComingSoon = function(el){
+
+    };
+
     $scope.placeChanged = function() {
 
         $scope.place = this.getPlace();
@@ -148,6 +152,7 @@ app.controller('repCtrl', ['$scope','userDataService', 'issueService', 'ModalSer
     this.name = userDataService.getNames();
 
     console.log("reps in rep ctrl", this.reps);
+    console.log('issues in rep ctrl', this.issues);
 
     $scope.callRep = function(rep) {
         $scope.showModal(rep, 'phone', repCtrl.name);
@@ -193,7 +198,6 @@ app.controller('modalCtrl', ['$scope', 'formatPhoneFilter', 'issueService', 'use
     $scope.success = false;
 
     console.log('rep in modal ctrl',rep);
-    console.log("address in modal: ", $scope.address);
 
     $scope.sendFax = function() {
 
@@ -382,6 +386,27 @@ app.filter('formatPhone', function() {
         formattedNumber = [a.slice(0, position), hyphen, a.slice(position)].join('');
 
         return formattedNumber;
+    };
+});
+
+app.filter('trustAsResourceUrl', ['$sce', function($sce) {
+    return function(val) {
+        return $sce.trustAsResourceUrl(val);
+    };
+}]);
+
+app.directive('tooltip', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs){
+            $(element).hover(function(){
+                // on mouseenter
+                $(element).tooltip('show');
+            }, function(){
+                // on mouseleave
+                $(element).tooltip('hide');
+            });
+        }
     };
 });
 

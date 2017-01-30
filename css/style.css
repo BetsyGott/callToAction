@@ -142,7 +142,7 @@ h3.page-subtitle {
 .rep-container {
     background: rgba(255,255,255,0.4);
     position: absolute;
-    top: 50%;
+    top: 55%;
     transform: translateY(-50%);
     width:100%;
     padding: 0 25px 25px 25px;
@@ -154,7 +154,7 @@ h3.page-subtitle {
     border-radius: 15px;
     text-align: center;
     padding: 5px;
-    height: 380px;
+    height: 400px;
 }
 
 .rep-image {
@@ -184,6 +184,7 @@ h3.page-subtitle {
     color: #fff;
     border-color: #000;
     margin: 0 3%;
+    width:50%;
 }
 
 .secondary-buttons button {
@@ -206,6 +207,13 @@ h3.page-subtitle {
     border: 1px solid white;
     color: white;
     font-weight: 200;
+}
+
+button.btn-disabled {
+    background: #e3e3e3;
+    color: grey;
+    border: 1px solid #bbb;
+    cursor: default;
 }
 
 .fax-wrapper {
