@@ -18,10 +18,15 @@
                                 <h4>Enter your address to locate your congressmen:</h4>
                                 <input ng-model="address" places-auto-complete size=50                                                                  component-restrictions="{country:'us'}"
                                        on-place-changed="placeChanged()" required/>
-                                <button  ng-disabled="!address || !mc.userFullName" class="btn btn-default" type="submit"
-                                         ng-click="submitInfo()">
-                                    Submit
-                                </button>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button  ng-disabled="!address || !mc.userFullName" class="btn btn-default" type="submit"
+                                             ng-click="submitInfo()">
+                                        Submit
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
