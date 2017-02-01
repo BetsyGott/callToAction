@@ -1,77 +1,27 @@
 <div class="home-container">
     <div class="jumbotron text-center home-splash">
-        <h1 class="text-uppercase">Speak United</h1>
-        <div class="container">
-        <!--<h1 class="text-uppercase">Call to Action</h1>-->
-        <div class="call-to-act-body">
-            <h2>Week of 11/26/2016</h2>
-            <p>End the violence against North Dakota Access Pipeline protesters.</p>
-            <button class="btn btn-lg call-btn">Get Started</button>
-        </div>
-    </div>
-    </div>
-
-
-    <!--<div class="container">-->
-
-        <!--<div class="row">-->
-        <!--<div class="col-md-4">-->
-            <!--<div class="panel panel-box main-panels">-->
-                <!--<div class="panel-heading main-panel-headers">-->
-                    <!--<h4 class="text-center text-uppercase">Contact Representatives</h4>-->
-                <!--</div>-->
-                <!--<div class="panel-body main-panel-body">-->
-                    <!--<p class="light">Contact information for members of the US House of Representatives. Quickly find your Representative using your address.</p>-->
-                    <!--<div class="text-center">-->
-                        <!--<a href="#" class="btn btn-info">Contact Reps</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-4">-->
-            <!--<div class="panel panel-box main-panels">-->
-                <!--<div class="panel-heading main-panel-headers">-->
-                    <!--<h4 class="text-center text-uppercase">Contact Senators</h4>-->
-                <!--</div>-->
-                <!--<div class="panel-body main-panel-body">-->
-                    <!--<p class="light">Contact information for members of the US Senate.</p>-->
-                    <!--<div class="text-center">-->
-                        <!--<a href="#" class="btn btn-info">Contact Senators</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-4">-->
-            <!--<div class="panel panel-box main-panels">-->
-                <!--<div class="panel-heading main-panel-headers">-->
-                    <!--<h4 class="text-center text-uppercase">Issues</h4>-->
-                <!--</div>-->
-                <!--<div class="panel-body main-panel-body">-->
-                    <!--<p class="light">A collection of call scripts for current issues.</p>-->
-                    <!--<div class="text-center">-->
-                        <!--<a href="#" class="btn btn-info">See Issues</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-    <!--</div>-->
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>Want to reach your elected representatives on a specific issue?</h2>
-                <p>Start typing your address to locate your representative:</p>
-                <!--<input id="autocomplete" placeholder="Enter your address" ng-focus="geolocate()" type="text">-->
-                <input places-auto-complete size=80
-                       ng-model="address"
-                       component-restrictions="{country:'us'}"
-                       on-place-changed="placeChanged()" />
-                <p>{{address}}</p>
+        <h1 class="text-uppercase page-title">
+            Speak United
+        </h1>
+        <h3 class="text-uppercase page-subtitle hidden-xs">Our Voice Will Be Heard</h3>
+        <div class="container call-to-act-container double-white-border">
+            <div class="call-to-act-body">
+                <h2>Current Action Item:</h2>
+                <h3>{{issues[0].title}}</h3>
+                <div uib-collapse="collapseIssues">
+                    <p>{{issues[0].description}}</p>
+                    <p>{{issues[0].notes}}</p>
+                </div>
+                <div>
+                    <a ng-click="collapseIssues = !collapseIssues">
+                        <i class="fa fa-plus" aria-hidden="true" ng-class="collapseIssues ? 'fa-plus' : 'fa-minus'"></i>
+                        Read
+                        <span ng-if="collapseIssues">More</span>
+                        <span ng-if="!collapseIssues">Less</span>
+                    </a>
+                </div>
+                <a href="#!/call_to_action"><button class="btn btn-lg call-btn">Speak Up</button></a>
             </div>
         </div>
-
     </div>
 </div>

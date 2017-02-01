@@ -10,6 +10,32 @@ body {
     font-family: "Alegreya Sans", sans-serif;
 }
 
+h1.page-title, h3.page-subtitle {
+    position: absolute;
+    left: 1%;
+    -webkit-webkit-text-fill-color: white;
+    -moz-webkit-text-fill-color: white;
+    -ms-webkit-text-fill-color: white;
+    -o-webkit-text-fill-color: white;
+    webkit-text-fill-color: white;
+    color: transparent;
+
+    }
+
+h1.page-title {
+    font-size: 5em;
+    font-family: 'Roboto', sans-serif;
+    top: 50px;
+    -webkit-text-stroke: 3px #fff;
+}
+
+h3.page-subtitle {
+    top: 25%;
+    letter-spacing: 4px;
+    -webkit-text-stroke: 2px #fff;
+    font-size: 2.3em;
+}
+
 .light {
     font-weight: 300;
 }
@@ -17,6 +43,10 @@ body {
 .emphasized-text {
     font-weight: bold;
     font-size: 110%;
+}
+
+.double-white-border {
+    border: 10px double #fff;
 }
 
 .nav>li>a:focus,
@@ -60,25 +90,44 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: bottom left;
-    /*background-position: 0 40%;*/
 }
 
-.jumbotron .container {
+.home-splash.jumbotron {
+    margin-bottom:0;
+}
+
+.call-to-act-container {
     background: rgba(255,255,255,0.4);
-    width: 60%;
-    padding: 20px 20px 40px 20px;
-    border: 10px double white;
+    width: 70%;
+    padding:  20px;
     color: #153661;
     position: absolute;
-    bottom: 10%;
+    bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
+    max-height: 480px;
+    overflow: scroll;
+}
+
+.call-to-act-container.lg-width {
+    width: 75%;
+    height: 80vh;
+    padding: 20px;
+}
+
+.call-to-act-container.lg-width .call-to-act-body {
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
 }
 
 .call-to-act-body {
-    background: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.8);
     padding: 10px;
-    width: 80%;
+    /*width: 80%;*/
     margin: 0 auto;
 }
 
@@ -86,11 +135,119 @@ body {
     margin-top:0;
 }
 
+.call-to-act-body input {
+    width: 350px;
+}
+
+.call-to-act-body button {
+    margin-top: 5px;
+}
+
+.rep-container {
+    background: rgba(255,255,255,0.4);
+    position: absolute;
+    top: 55%;
+    transform: translateY(-50%);
+    width:100%;
+    padding: 0 25px 25px 25px;
+}
+
+.rep-card {
+    background: rgba(255,255,255,0.8);
+    border: 1px solid grey;
+    border-radius: 15px;
+    text-align: center;
+    padding: 5px;
+    height: 400px;
+}
+
+.rep-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.rep-image img {
+    width:100%;
+}
+
+.buttons {
+    margin-top: 15px;
+}
+
+.highlight-buttons, .secondary-buttons {
+    margin: 2%;
+}
+
+.highlight-buttons button {
+    font-size: 1.2em;
+    padding: 2% 6%;
+    background: #a97da9;
+    color: #fff;
+    border-color: #000;
+    margin: 0 3%;
+    width:50%;
+}
+
+.secondary-buttons button {
+    font-size: 1em;
+    padding: 1% 4%;
+    background: #8581af;
+    color: #fff;
+    border-color: #000;
+    margin-bottom: 5px;
+    margin-left: 2%;
+}
+
+.secondary-buttons button a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .call-btn{
     background: rgba(99,149,193,0.8);
     border: 1px solid white;
     color: white;
     font-weight: 200;
+}
+
+button.btn-disabled {
+    background: #e3e3e3;
+    color: grey;
+    border: 1px solid #bbb;
+    cursor: default;
+}
+
+.fax-wrapper {
+    padding: 0 20px;
+}
+
+.fax-preview {
+    /*background: #e3e3e3;*/
+    padding: 4px;
+    font-size: 18px;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.fax-address {
+    margin-top: 40px;
+}
+
+.fax-title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.fax-body {
+    line-height: 200%;
 }
 
 .main-panel-headers {
@@ -220,23 +377,21 @@ header.carousel .fill {
     font-size: 100px;
 }
 
-/* Pricing Page Styles */
+/* Script Modal styles */
 
-.price {
-    display: block;
-    font-size: 50px;
-    line-height: 50px;
+.phone-group {
+    list-style: none;
+    background: #d9edf7;
+    padding: 10px 0 10px 10px;
+     text-align: center;
+    font-weight: 600;
+    font-size: 115%;
+    border-radius: 5px;
 }
 
-.price sup {
-    top: -20px;
-    left: 2px;
-    font-size: 20px;
-}
-
-.period {
-    display: block;
-    font-style: italic;
+.phone-group li {
+    display: inline-block;
+    margin-right: 5%;
 }
 
 /* Footer Styles */
@@ -247,25 +402,61 @@ footer {
 
 /* Responsive Styles */
 
-@media(max-width:991px) {
-    .customer-img,
-    .img-related {
-        margin-bottom: 30px;
+@media (max-width: 1545px){
+
+    .home-splash {
+        background-size: cover;
+        background-position: bottom right;
     }
 }
 
-@media(max-width:767px) {
-    .img-portfolio {
-        margin-bottom: 15px;
-    }
-
-    header.carousel .carousel {
-        height: 70%;
+@media (min-width: 768px) and (max-width: 991px){
+    .page-title {
+        margin-top: 100px;
+        width: 100%;
     }
 }
 
+@media (max-width: 991px) {
+    .rep-container {
+        background: #fff;
+        position: static;
+        transform: none;
+        width: 100%;
+        padding: 0;
+    }
 
-/* todo change font to something with bold/thin, like lato or josefin slab,  */
-/* todo fix the spacing and look of panels on main */
-/* todo change 'contact xxx' to uppercase, mess around with uppercase in other areas*/
-/*todo fix buttons in contact sections on main page, and also call to action button*/
+    .rep-card {
+         border-radius: 0;
+         padding: 5px;
+         height: auto;
+    }
+}
+
+@media (max-width: 414px){
+
+    .call-to-act-container {
+
+        bottom: 2%;
+        left: 0;
+        transform: none;
+        width: 100%;
+    }
+
+    .call-to-act-container.lg-width {
+         width: 100%;
+        height:100%;
+    }
+
+    .call-to-act-container.lg-width .call-to-act-body {
+        width: 100%;
+        height: 100%;
+
+    }
+
+    .call-to-act-body input {
+        width: 100%;
+    }
+
+
+}

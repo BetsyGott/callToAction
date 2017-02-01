@@ -1,0 +1,53 @@
+
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="close(false)" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title text-center">
+                    <span ng-if=" type == 'phone' ">Call </span>
+                    <span ng-if=" type == 'fax' "> Send Fax to </span>
+                    {{rep.name}}
+                </h3>
+            </div>
+            <div class="modal-body">
+
+                <div ng-if=" type == 'phone' ">
+                    <ul class="phone-group">
+                        <li ng-if="rep.districtPhone">
+                            District Office: <a ng-href="tel: +1-{{rep.districtPhone | formatPhone}}">{{rep.districtPhone}}</a>
+                        </li>
+                        <li ng-if="rep.dcPhone">
+                            DC Office: <a ng-href="tel:+1-{{rep.dcPhone | formatPhone}}">{{rep.dcPhone}}</a>
+                        </li>
+                    </ul>
+                <!--</div>-->
+
+                    <p><strong>Script:</strong></p>
+                    <p>{{ (modifiedIssues[0].scripts | filter:{type: 'phone'}:true | limitTo:1)[0].text }}</p>
+                </div>
+                <div ng-if=" type == 'fax' " class="fax-container">
+                    <h5 class="fax-preview" ng-class="{'bg-success': success, 'bg-info': !success}">Preview: </h5>
+                    <div class="fax-wrapper">
+                        <div class="text-right fax-address">
+                            <p>{{ name }}</p>
+                            <p>{{ address }}</p>
+                        </div>
+                        <h3 class="fax-title">{{ modifiedIssues[0].title }}</h3>
+                        <p class="fax-body">
+                            {{ (modifiedIssues[0].scripts | filter:{type: 'mail'}:true | limitTo:1)[0].text }}
+                        </p>
+                        <p>Sincerely,</p>
+                        <p>{{ name }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-click="close(true)" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+                <button type='button' class="btn btn-primary" ng-if=" type == 'fax' && showSend " ng-click="sendFax()">Send</button>
+            </div>
+        </div>
+    </div>
+</div>

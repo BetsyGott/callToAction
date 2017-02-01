@@ -1,0 +1,55 @@
+
+<div class="home-splash" ng-controller="repCtrl as rc">
+
+    <div class="rep-container double-white-border">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-center">Your Representatives:</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" ng-repeat="rep in rc.reps">
+                <div class="rep-card">
+                    <h3>
+                        <span ng-show="rep.type === 'house' " >Rep. </span>
+                        <span ng-show="rep.type === 'senate' " >Sen. </span>
+                        {{rep.name}}
+                        <span ng-show="rep.party === 'Democratic' ">(D)</span>
+                        <span ng-show="rep.party === 'Republican' ">(R)</span>
+                        <div ng-if="rep.type === 'house' ">
+                            <small>District: {{ rep.district }}</small>
+                        </div>
+                    </h3>
+                    <div class="rep-image">
+                        <img ng-src="{{rep.photoUrl}}">
+                        <div class="missing-img" ng-if="!rep.photoUrl"><strong>No Image Found</strong></div>
+                    </div>
+                    <div class="buttons">
+                        <div class="highlight-buttons">
+                            <button class="btn" ng-click="callRep(rep)">Call</button>
+                        </div>
+                        <div class="secondary-buttons">
+                            <!--<button class="btn">Email</button>-->
+                            <button class="btn" ng-if="rep.dcFax || rep.districtFax" ng-click="faxRep(rep)">Fax</button>
+
+                            <button class="btn" ng-if="rep.socialMedia.twitter">
+                                <a ng-href="https://twitter.com/intent/tweet?text=@{{rep.socialMedia.twitter}}%20{{ $parent.twitter.text }}&hashtags={{ $parent.twitter.hashTags }}" target="_blank">
+                                    <i class="fa fa-twitter" aria-hidden="true"></i> Tweet
+                                </a>
+                            </button>
+                            <button class="btn" ng-if="rep.website">
+                                <a ng-href="{{rep.website}}" target="_blank">
+                                    Visit Website
+                                </a>
+                            </button>
+                            <button class="btn btn-disabled" ng-if="rep.socialMedia.facebook" title="Feature Coming Soon!" data-toggle="tooltip" data-placement="bottom" tooltip>
+                                <i class="fa fa-facebook-square" aria-hidden="true"></i> Post
+                            </button>
+                            <button class="btn btn-disabled" title="Feature Coming Soon!" data-toggle="tooltip" data-placement="bottom" tooltip>Write a Letter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
