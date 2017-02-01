@@ -1,5 +1,5 @@
 
-    <div class="home-splash">
+    <div class="home-splash" ng-controller="mainCtrl as mc">
 
         <div class="call-to-act-container double-white-border lg-width" ng-hide="hideCallToAct">
             <div class="call-to-act-body text-center">
@@ -8,39 +8,23 @@
                     <h3>{{issues[0].title}}</h3>
                     <p>{{issues[0].description}}</p>
                     <h3>Speak Up</h3>
-                    <div class="row enter-info" ng-if="!userFullName || !address">
-                        <div class="col-md-6">
-                            <h4>First, enter your name:</h4>
-                            <input type="text" placeholder="first and last name" ng-model="userFullName" ng-change="saveName()"/>
-                            <p>name: {{userFullName}}</p>
-                            <p class="text-danger" ng-if="!userFullName">{{enterNameMsg}}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Enter your address to locate your congressmen:</h4>
-                            <input
-                                    ng-model="address"
-                                    places-auto-complete size=50
-                                   component-restrictions="{country:'us'}"
-                                   on-place-changed="placeChanged()" />
-                            <p class="text-danger" ng-if="!address">{{enterAddressMsg}}</p>
-                            <button class="btn btn-default" ng-click="submitInfo()">Submit</button>
-                        </div>
+                    <div class="row enter-info" ng-if="!showConfirmBox">
+                        <form>
+                            <div class="col-md-6">
+                                <h4>Enter your name:</h4>
+                                <input type="text" placeholder="first and last name" ng-model="mc.userFullName" ng-change="saveName()" required/>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Enter your address to locate your congressmen:</h4>
+                                <input ng-model="address" places-auto-complete size=50                                                                  component-restrictions="{country:'us'}"
+                                       on-place-changed="placeChanged()" required/>
+                                <button  ng-disabled="!address || !mc.userFullName" class="btn btn-default" type="submit"
+                                         ng-click="submitInfo()">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="row enter-info" ng-if=" userFullName && address ">
-                        <div class="col-md-6">
-                            <h4>Your Name:</h4>
-                            <p>{{userFullName}}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Your Address:</h4>
-                            <p>{{address}}</p>
-                        </div>
-                        <button class="btn btn-default">Submit Info</button>
-                        <p>Not you?</p>
-                        <button class="btn btn-default" ng-click="clearInfo()">Enter Your Info</button>
-                    </div>
-
-
                 </div>
 
             </div>

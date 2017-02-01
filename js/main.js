@@ -20,33 +20,38 @@ app.config(function($routeProvider) {
 app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $http, $q, NgMap, userDataService, issueService) {
 
     var userDataService = userDataService;
+    var issueService = issueService;
+
+    var mainCtrl = this;
 
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
     $scope.collapseIssues = true;
-    $scope.userFullName = userDataService.getNames();
+    this.userFullName = userDataService.getNames();
     $scope.address = userDataService.getAddress();
     $scope.enterNameMsg = '';
     $scope.enterAddressMsg = '';
 
-    console.log("name:" + $scope.userFullName, "address: ", $scope.address);
-
-    $scope.saveName = function(){
-        console.log('saving name:', $scope.userFullName);
-        userDataService.saveName($scope.userFullName);
+    $scope.checkWhatToShow = function(){
+      if(mainCtrl.userFullName && $scope.address){
+          $scope.showConfirmBox = true;
+      }  else {
+          $scope.showConfirmBox = false;
+      }
     };
 
-    //todo figure out why my name is never being saved!!!!
+    $scope.saveName = function(){
+        userDataService.saveName(mainCtrl.userFullName);
+    };
 
+    $scope.saveAddress = function(){
+        userDataService.setAddress($scope.address);
+    };
 
     $scope.placeChanged = function() {
 
-        console.log('place changed');
-
         $scope.place = this.getPlace();
-
-        console.log("place saved:", $scope.place);
 
         userDataService.setAddress($scope.place.formatted_address);
 
@@ -56,36 +61,13 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
 
     $scope.submitInfo = function(){
 
-        console.log("hi");
-
-        var name = $scope.userFullName;
-
-        console.log('name in submit:', name);
-
-        if(!name){
-            $scope.enterNameMsg = "Please enter your full name. We need it to generate templates for you!";
-           return false;
-        } else {
-            $scope.enterNameMsg = '';
-        }
-
-        var address = $scope.address;
-
-        console.log('address after hitting submit', address);
-
-        if(!address) {
-            $scope.enterAddressMsg = 'Please enter your address.';
-            return false;
-        } else {
-            $scope.enterAddressMsg = '';
-        }
-
-        userDataService.getRepsFromApi( userDataService.getAddress() )
-           .then(userDataService.setReps)
-           .then(function(reps){
-               $scope.reps = reps;
-               $scope.changeToMyRepsPage();
-           });
+            userDataService.getRepsFromApi( userDataService.getAddress() )
+                .then(userDataService.setReps)
+                .then(function(reps){
+                    $scope.reps = reps;
+                    $scope.changeToMyRepsPage();
+                    $scope.showConfirmBox = true;
+                });
 
     };
 
@@ -96,20 +78,21 @@ app.controller('mainCtrl', function ($scope, $route, $routeParams, $location, $h
     $scope.clearInfo = function(){
         $scope.userFullName = '';
         $scope.address = '';
-      userDataService.setAddress($scope.address);
-      userDataService.saveName($scope.userFullName);
+        userDataService.setAddress($scope.address);
+        userDataService.saveName($scope.userFullName);
+        $scope.showConfirmBox = false;
     };
 
     $scope.getIssues = function(){
         issueService.callForIssues()
             .then(function (response) {
-                // console.log(response.data);
+
                issueService.setIssues(response.data);
+
                $scope.issues = issueService.getIssues();
 
             });
     };
-
 
     $scope.getIssues();
 
@@ -119,15 +102,50 @@ app.controller('repCtrl', ['$scope','userDataService', 'issueService', 'ModalSer
 
     var repCtrl = this;
     var userDataService = userDataService;
+    var issueService = issueService;
 
     this.reps = userDataService.getReps();
     this.issues = issueService.getIssues();
     this.name = userDataService.getNames();
     this.address = userDataService.getAddress();
 
-    console.log('name in rep ctrl:', this.name, 'address in rep ctrl:', this.address);
-    console.log("reps in rep ctrl", this.reps);
     console.log('issues in rep ctrl', this.issues);
+
+    var getTwitter = function(object){
+
+        console.log('get twitter');
+        var scripts = object.scripts;
+        for(var i = 0; i < scripts.length; i++){
+            if ( scripts[i].type == 'twitter' ) {
+
+                 $scope.twitter = {
+                     text: scripts[i].text,
+                     hashTags: scripts[i].hashTags
+                 };
+
+            }
+        }
+    };
+
+    if(!this.issues.length){
+        issueService.callForIssues()
+            .then(function (response) {
+                issueService.setIssues(response.data);
+                self.issues = issueService.getIssues();
+                try {
+                    getTwitter(self.issues[0]);
+                } catch(error){
+                    console.log(error);
+                }
+            });
+    } else {
+        try {
+            getTwitter(this.issues[0]);
+        } catch(error){
+            console.log(error);
+        }
+    }
+
 
     $scope.callRep = function(rep) {
         $scope.showModal(rep, 'phone', repCtrl.name);
@@ -164,15 +182,16 @@ app.controller('modalCtrl', ['$scope', 'formatPhoneFilter', 'issueService', 'use
 
     var self = this;
 
+    var userDataService = userDataService;
+    var issueService = issueService;
+
     $scope.type = type;
     $scope.rep = rep;
     this.issues = issueService.getIssues();
     $scope.address = userDataService.getAddress();
-    $scope.name = name ? name.fullName : '';
+    $scope.name = userDataService.getNames();
     $scope.showSend = true;
     $scope.success = false;
-
-    console.log('rep in modal ctrl',rep);
 
     $scope.sendFax = function() {
 
@@ -204,7 +223,6 @@ app.controller('modalCtrl', ['$scope', 'formatPhoneFilter', 'issueService', 'use
 
     $scope.modifyScripts = function() {
 
-        console.log(self.issues);
         $scope.modifiedIssues = JSON.parse(JSON.stringify(self.issues));
 
         for(var i = 0; i < $scope.modifiedIssues.length; i++) {
@@ -233,20 +251,6 @@ app.controller('modalCtrl', ['$scope', 'formatPhoneFilter', 'issueService', 'use
 
 
 }]);
-
-// app.controller('homeCtrl', function ($scope, $http, $q, issueService) {
-//
-//     $scope.issueService = issueService;
-//
-//     $scope.issues = $scope.issueService.getIssues();
-//
-//     $scope.issueService.callForIssues();
-//
-//     console.log($scope.issues);
-//
-//     console.log("ajsf;lkajsd;fkj");
-//
-// });
 
 app.service('issueService', function($http){
 
@@ -379,6 +383,3 @@ app.directive('tooltip', function(){
         }
     };
 });
-
-
-// todo make adding your name mandatory, include text: 'we will automatically fill out our templates with your name.'

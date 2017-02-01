@@ -31,13 +31,9 @@
                         <div class="secondary-buttons">
                             <!--<button class="btn">Email</button>-->
                             <button class="btn" ng-if="rep.dcFax || rep.districtFax" ng-click="faxRep(rep)">Fax</button>
-                            <button class="btn" ng-if="rep.socialMedia.facebook">
-                                <i class="fa fa-facebook-square" aria-hidden="true"></i>
-                            </button>
-                            <!--<br>-->
 
                             <button class="btn" ng-if="rep.socialMedia.twitter">
-                                <a ng-href="https://twitter.com/intent/tweet?text=@{{rep.socialMedia.twitter}}%20{{ (rc.issues[0].scripts | filter:{type: 'twitter'}:true | limitTo:1)[0].text }}&hashtags={{ (rc.issues[0].scripts | filter:{type: 'twitter'}:true | limitTo:1)[0].hashTags }}" target="_blank">
+                                <a ng-href="https://twitter.com/intent/tweet?text=@{{rep.socialMedia.twitter}}%20{{ $parent.twitter.text }}&hashtags={{ $parent.twitter.hashTags }}" target="_blank">
                                     <i class="fa fa-twitter" aria-hidden="true"></i> Tweet
                                 </a>
                             </button>
@@ -45,6 +41,9 @@
                                 <a ng-href="{{rep.website}}" target="_blank">
                                     Visit Website
                                 </a>
+                            </button>
+                            <button class="btn btn-disabled" ng-if="rep.socialMedia.facebook" title="Feature Coming Soon!" data-toggle="tooltip" data-placement="bottom" tooltip>
+                                <i class="fa fa-facebook-square" aria-hidden="true"></i> Post
                             </button>
                             <button class="btn btn-disabled" title="Feature Coming Soon!" data-toggle="tooltip" data-placement="bottom" tooltip>Write a Letter</button>
                         </div>
