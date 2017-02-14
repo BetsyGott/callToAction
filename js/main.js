@@ -109,11 +109,8 @@ app.controller('repCtrl', ['$scope','userDataService', 'issueService', 'ModalSer
     this.name = userDataService.getNames();
     this.address = userDataService.getAddress();
 
-    console.log('issues in rep ctrl', this.issues);
-
     var getTwitter = function(object){
 
-        console.log('get twitter');
         var scripts = object.scripts;
         for(var i = 0; i < scripts.length; i++){
             if ( scripts[i].type == 'twitter' ) {
@@ -168,7 +165,7 @@ app.controller('repCtrl', ['$scope','userDataService', 'issueService', 'ModalSer
         }).then(function(modal) {
             modal.element.modal();
             modal.close.then(function(result) {
-                console.log(result);
+
             });
         }).catch(function(error) {
             // error contains a detailed error message.
